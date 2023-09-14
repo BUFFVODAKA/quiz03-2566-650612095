@@ -7,24 +7,25 @@ export const GET = async () => {
   readDB();
   return NextResponse.json({
     ok: true,
-    //rooms:
-    //totalRooms:
+    rooms: DB.rooms
+    // totalRooms: DB.
   });
 };
 
 export const POST = async (request) => {
   const payload = checkToken();
-
-  // return NextResponse.json(
-  //   {
-  //     ok: false,
-  //     message: "Invalid token",
-  //   },
-  //   { status: 401 }
-  // );
-
+  if(!payload){
+  return NextResponse.json(
+    {
+      ok: false,
+      message: "Invalid token",
+    },
+    { status: 401 }
+  );
+  }
   readDB();
 
+  
   // return NextResponse.json(
   //   {
   //     ok: false,
@@ -40,7 +41,7 @@ export const POST = async (request) => {
 
   return NextResponse.json({
     ok: true,
-    //roomId,
-    message: `Room ${"replace this with room name"} has been created`,
+    roomId: DB.roomId ,
+    message: `Room ${DB.roomId} has been created`,
   });
 };
