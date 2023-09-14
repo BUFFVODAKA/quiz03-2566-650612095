@@ -8,7 +8,7 @@ export const GET = async () => {
   return NextResponse.json({
     ok: true,
     rooms: DB.rooms
-    // totalRooms: DB.
+    // totalRooms: DB.rooms.length
   });
 };
 
@@ -25,15 +25,15 @@ export const POST = async (request) => {
   }
   readDB();
 
-  
-  // return NextResponse.json(
-  //   {
-  //     ok: false,
-  //     message: `Room ${"replace this with room name"} already exists`,
-  //   },
-  //   { status: 400 }
-  // );
-
+  if(DB.roomId === payload){
+  return NextResponse.json(
+    {
+      ok: false,
+      message: `Room ${DB.roomid.push(roomId)} already exists`,
+    },
+    { status: 400 }
+  );
+  }
   const roomId = nanoid();
 
   //call writeDB after modifying Database
