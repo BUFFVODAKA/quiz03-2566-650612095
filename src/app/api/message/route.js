@@ -5,26 +5,42 @@ import { NextResponse } from "next/server";
 
 export const GET = async (request) => {
   readDB();
+  
+  // const foundroom = DB.rooms.find((x)=> x.roomid ==  roomid)
+  // if(!foundroom){
 
-  // return NextResponse.json(
-  //   {
-  //     ok: false,
-  //     message: `Room is not found`,
-  //   },
-  //   { status: 404 }
-  // );
+  return NextResponse.json(
+    {
+      ok: false,
+      message: `Room is not found`,
+    },
+    { status: 404 }
+  );
+  
 };
+// 
+ 
+// return NextResponse.json(
+//   {
+//     ok: true,
+//     roomid: DB.roomid,
+//     messageId: DB.messageId,
+//     messageText: DB.messageText
+
+//   }
+// )
+
 
 export const POST = async (request) => {
   readDB();
 
-  // return NextResponse.json(
-  //   {
-  //     ok: false,
-  //     message: `Room is not found`,
-  //   },
-  //   { status: 404 }
-  // );
+  return NextResponse.json(
+    {
+      ok: false,
+      message: `Room is not found`,
+    },
+    { status: 404 }
+  );
 
   const messageId = nanoid();
 
@@ -39,14 +55,15 @@ export const POST = async (request) => {
 
 export const DELETE = async (request) => {
   const payload = checkToken();
-
-  // return NextResponse.json(
-  //   {
-  //     ok: false,
-  //     message: "Invalid token",
-  //   },
-  //   { status: 401 }
-  // );
+  if(!payload){
+  return NextResponse.json(
+    {
+      ok: false,
+      message: "Invalid token",
+    },
+    { status: 401 }
+  );
+  }
 
   readDB();
 
