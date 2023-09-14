@@ -6,19 +6,23 @@ import { NextResponse } from "next/server";
 export const GET = async (request) => {
   readDB();
   
-  // const foundroom = DB.rooms.find((x)=> x.roomid ==  roomid)
-  // if(!foundroom){
-
-  return NextResponse.json(
-    {
-      ok: false,
-      message: `Room is not found`,
-    },
-    { status: 404 }
-  );
-  
+  const roomId = request.nextUrl.searchParams.get("roomId");
+  const foundroom = DB.messages.find((x) => x.roomId === roomId);
+  if (!foundroom) {
+    return NextResponse.json(
+      {
+        ok: false,
+        message: `Room is not found`,
+      },
+      { status: 404 }
+    );
+  }
+  const messages = DB.messages.filter((x) => x.roomId === roomId);
+  return NextResponse.json({
+    ok: true,
+    message: messages,
+  });
 };
-// 
  
 // return NextResponse.json(
 //   {
@@ -48,7 +52,7 @@ export const POST = async (request) => {
 
   return NextResponse.json({
     ok: true,
-    // messageId,
+    messageId: DB.messageId,
     message: "Message has been sent",
   });
 };
@@ -66,6 +70,45 @@ export const DELETE = async (request) => {
   }
 
   readDB();
+  // const rawAuthHeader = headers().get("authorization");
+  // const token = rawAuthHeader.split(" ")[1];
+  // let username = null;
+  // let role = null;
+
+  // try {
+  //   const payload = jwt.verify(token, process.env.JWT_SECRET);
+  //   studentId = payload.studentId;
+  //   role = payload.role;
+  // } catch {
+  //   return NextResponse.json(
+  //     {
+  //       ok: false,
+  //       message: "Invalid token",
+  //     },
+  //     { status: 401 }
+  //   );
+  // }
+
+  // if (role === "ADMIN") {
+  //   return NextResponse.json(
+  //     {
+  //       ok: true,
+  //       message: "Only Student can access this API route",
+  //     },
+  //     { status: 403 }
+  //   );
+  // } else {
+  //   const body = await request.json();
+  //   const { courseNo } = body;
+  //   if (typeof courseNo !== "string" || courseNo.length !== 6) {
+  //     return NextResponse.json(
+  //       {
+  //         ok: false,
+  //         message: "courseNo must contain 6 characters",
+  //       },
+  //       { status: 400 }
+  //     );
+  //   }
 
   // return NextResponse.json(
   //   {
